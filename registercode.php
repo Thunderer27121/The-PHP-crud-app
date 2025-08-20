@@ -19,11 +19,12 @@ function sendemail($name, $email, $verify_token)
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
         $mail->Username   = getenv("SMTP_USER");                     //SMTP username
         $mail->Password   = getenv("SMTP_PASS");              //SMTP password
-        $mail->SMTPSecure = "ssl";            //Enable implicit TLS encryption
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;      //Enable implicit TLS encryption
         $mail->Port       = getenv("SMTP_PORT");      //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
+        $mail->SMTPDebug = 2; // Or 3 for more details
+        $mail->Debugoutput = 'html';
         //Recipients
-        $mail->setFrom('anujsingh27121@gmail.com');
+        $mail->setFrom(getenv("SMTP_USER"));
         $mail->addAddress("$email", "$name");
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = 'email verification from platform';
