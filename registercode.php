@@ -30,7 +30,7 @@ function sendemail($name, $email, $verify_token)
         $mail->Body    = "<h2>You have registered with platform</h2>
         <h5>Verify your email address to login with the below given link</h5>
         <br><br>
-        <a href= 'http://localhost/crud/verify_email.php?token=$verify_token'>click me</a>";
+        <a href= 'https://the-php-crud-app.onrender.com/verify_email.php?token=$verify_token'>click me</a>";
 
 
         $mail->send();
