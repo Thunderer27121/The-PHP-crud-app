@@ -10,7 +10,7 @@ require_once './googleauth/vendor/autoload.php';
 // init configuration
 $clientID = '652446713334-h313ajnn1rjdo51r4rhoegncrvukm2dl.apps.googleusercontent.com';
 $clientSecret = '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';
-$redirectUri = 'http://localhost/platform/login.php';
+$redirectUri = 'https://the-php-crud-app.onrender.com/login.php';
 
 // create Client Request to access Google API
 $client = new Google_Client();
