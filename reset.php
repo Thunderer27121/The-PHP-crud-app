@@ -30,7 +30,7 @@ function password_reset($name, $email, $token)
         $mail->Body    = "<h2>Hey there!!</h2>
         <h5>below is the password reset link for your account</h5>
         <br><br>
-        <a href= 'http://localhost/crud/changepass.php?token=$token&email=$email'>Click me</a>";
+        <a href= 'https://the-php-crud-app.onrender.com/changepass.php?token=$token&email=$email'>Click me</a>";
 
 
         $mail->send();
