@@ -14,17 +14,18 @@ function password_reset($name, $email, $token)
     try {
         //Server settings
         $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-        $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+       $mail->isSMTP();                                            //Send using SMTP
+        $mail->Host       = getenv("SMTP_HOST");                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'anujsingh27121@gmail.com';                     //SMTP username
-        $mail->Password   = 'iujulevyrjulcgau';                               //SMTP password
-        $mail->SMTPSecure = "ssl";            //Enable implicit TLS encryption
-        $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
+        $mail->Username   = getenv("SMTP_USER");                     //SMTP username
+        $mail->Password   = getenv("SMTP_PASS");              //SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;      //Enable implicit TLS encryption
+        $mail->Port       = getenv("SMTP_PORT");      //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        $mail->SMTPDebug = 2; // Or 3 for more details
+        $mail->Debugoutput = 'html';
         //Recipients
-        $mail->setFrom('anujsingh27121@gmail.com', $name);
-        $mail->addAddress("$email");
+        $mail->setFrom(getenv("SMTP_USER"));
+        $mail->addAddress("$email", "$name");
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = 'email verification from platform';
         $mail->Body    = "<h2>Hey there!!</h2>
