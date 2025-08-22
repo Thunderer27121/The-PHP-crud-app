@@ -9,26 +9,26 @@ require 'vendor/autoload.php';
 function resend_email($name,$email,$verify_token){
     $mail = new PHPMailer(true);
 
-    try {
+   try {
         //Server settings
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;                     
-        $mail->isSMTP();                                            
-        $mail->Host       = 'smtp.gmail.com';                     
-        $mail->SMTPAuth   = true;                                   
-        $mail->Username   = 'anujsingh27121@gmail.com';                     
-        $mail->Password   = 'iujulevyrjulcgau';                              
-        $mail->SMTPSecure = "ssl";          
-        $mail->Port       = 465;                                   
-
+        $mail->isSMTP();                                            //Send using SMTP
+        $mail->Host       = getenv("SMTP_HOST");                     //Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+        $mail->Username   = getenv("SMTP_USER");                     //SMTP username
+        $mail->Password   = getenv("SMTP_PASS");              //SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;      //Enable implicit TLS encryption
+        $mail->Port       = getenv("SMTP_PORT");      //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        $mail->SMTPDebug = 2; // Or 3 for more details
+        $mail->Debugoutput = 'html';
         //Recipients
-        $mail->setFrom('anujsingh27121@gmail.com');
+        $mail->setFrom(getenv("SMTP_USER"));
         $mail->addAddress("$email", "$name");
-        $mail->isHTML(true);                                 
+        $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = 'email verification from platform';
-        $mail->Body    = "<h2>Another link to verify your email</h2>
+        $mail->Body    = "<h2>You have registered with platform</h2>
         <h5>Verify your email address to login with the below given link</h5>
         <br><br>
-        <a href= 'http://localhost/crud/verify_email.php?token=$verify_token'>click me</a>";
+        <a href= 'https://the-php-crud-app.onrender.com/verify_email.php?token=$verify_token'>click me</a>";
 
 
         $mail->send();
